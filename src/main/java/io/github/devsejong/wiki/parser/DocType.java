@@ -1,9 +1,9 @@
 package io.github.devsejong.wiki.parser;
 
-import io.github.devsejong.wiki.parser.parser.HtmlParser;
-import io.github.devsejong.wiki.parser.parser.MarkdownParser;
-import io.github.devsejong.wiki.parser.parser.Parser;
-import io.github.devsejong.wiki.parser.parser.TextParser;
+import io.github.devsejong.wiki.parser.docparser.HtmlParser;
+import io.github.devsejong.wiki.parser.docparser.MarkdownParser;
+import io.github.devsejong.wiki.parser.docparser.Parser;
+import io.github.devsejong.wiki.parser.docparser.TextParser;
 
 public enum DocType {
     MARKDOWN(MarkdownParser.class),

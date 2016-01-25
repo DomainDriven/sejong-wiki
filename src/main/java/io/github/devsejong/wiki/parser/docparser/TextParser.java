@@ -1,4 +1,4 @@
-package io.github.devsejong.wiki.parser.parser;
+package io.github.devsejong.wiki.parser.docparser;
 
 public class TextParser implements Parser {
 

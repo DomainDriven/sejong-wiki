@@ -1,6 +1,6 @@
 package io.github.devsejong.wiki.parser;
 
-import io.github.devsejong.wiki.parser.parser.Parser;
+import io.github.devsejong.wiki.parser.docparser.Parser;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;

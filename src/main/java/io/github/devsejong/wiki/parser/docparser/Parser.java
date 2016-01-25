@@ -1,4 +1,4 @@
-package io.github.devsejong.wiki.parser.parser;
+package io.github.devsejong.wiki.parser.docparser;
 
 public interface Parser {
     boolean isParsable(String fileExtension);
