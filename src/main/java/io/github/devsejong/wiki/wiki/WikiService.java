@@ -2,17 +2,15 @@ package io.github.devsejong.wiki.wiki;
 
 import io.github.devsejong.wiki.parser.DocType;
 import io.github.devsejong.wiki.parser.ParserService;
-import io.github.devsejong.wiki.data.DataService;
+import io.github.devsejong.wiki.file.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.File;
 
 @Service
 public class WikiService {
 
     @Autowired
-    private DataService dataService;
+    private FileService fileService;
     @Autowired
     private ParserService parserService;
 
@@ -23,25 +21,13 @@ public class WikiService {
      * @return
      */
     public String readFileAndParse(String wikiPath){
-        String rawText = dataService.read(wikiPath);
-        System.out.println(rawText);
+        String rawText = fileService.read(wikiPath);
         return parserService.parse(DocType.MARKDOWN, rawText);
     }
 
-    /**
-     * path의 파일을 읽은 뒤 문자열을 반환합니다.
-     *
-     * @param wikiPath
-     * @return
-     */
-    public File readFile(String wikiPath){
-        return dataService.readFile(wikiPath);
-    }
-
+    //지금은 사용안함.. 삭제할까?
     private static String getFileExtension(String wikiPath){
-        String file = wikiPath.substring(wikiPath.lastIndexOf("/"));
-        String extension = file.substring(file.lastIndexOf("."));
-
-        return extension;
+        String fileName = wikiPath.substring(wikiPath.lastIndexOf("/"));
+        return fileName.substring(fileName.lastIndexOf("."));
     }
 }

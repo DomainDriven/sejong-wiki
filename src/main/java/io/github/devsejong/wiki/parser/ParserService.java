@@ -11,12 +11,11 @@ import java.util.Map;
 
 @Service
 public class ParserService {
-    private List<DocType> docTypes;
     private Map<DocType, Parser> parsers;
 
     @PostConstruct
     public void init() throws IllegalAccessException, InstantiationException {
-        docTypes = Arrays.asList(DocType.values());
+        List<DocType> docTypes = Arrays.asList(DocType.values());
 
         parsers = new HashMap<>();
         for (DocType docType : docTypes)
