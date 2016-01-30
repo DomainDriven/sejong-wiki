@@ -1,4 +1,4 @@
-package io.github.devsejong.wiki.file;
+package io.github.devsejong.wiki.docfile;
 
 import io.github.devsejong.wiki.SejongWikiApplication;
 import org.junit.Test;
@@ -11,10 +11,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SejongWikiApplication.class)
 @WebAppConfiguration
-public class FileServiceImplTest {
+public class DocFileServiceImplTest {
 
     @Autowired
-    FileService fileService;
+    DocFileService docFileService;
 
     @Test
     public void testRead() throws Exception {

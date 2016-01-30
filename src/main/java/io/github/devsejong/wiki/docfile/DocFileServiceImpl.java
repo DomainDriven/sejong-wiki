@@ -1,6 +1,6 @@
-package io.github.devsejong.wiki.file;
+package io.github.devsejong.wiki.docfile;
 
-import io.github.devsejong.wiki.file.git.GitService;
+import io.github.devsejong.wiki.docfile.git.GitService;
 import org.eclipse.jgit.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +14,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @Service
-public class FileServiceImpl implements FileService {
+public class DocFileServiceImpl implements DocFileService {
 
     @Value("${wiki.workingDirectory}")
     String workingDirectory;
@@ -29,24 +29,24 @@ public class FileServiceImpl implements FileService {
             List<String> lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
             return StringUtils.join(lines, "\n");
         } catch (IOException e) {
-            throw new FileServiceException("Failed to read data", e);
+            throw new DocFileServiceException("Failed to read data", e);
         }
     }
 
     @Override
     public void make(String path, String body) {
-        throw new FileServiceException("작업 중!!");
+        throw new DocFileServiceException("작업 중!!");
     }
 
     @Override
     public void modify(String path, String body, String history) {
-        throw new FileServiceException("작업 중!!");
+        throw new DocFileServiceException("작업 중!!");
     }
 
 
     @Override
     public void delete(String path) {
-        throw new FileServiceException("작업 중!!");
+        throw new DocFileServiceException("작업 중!!");
     }
 
     Path getFilePath(String path) {

@@ -1,6 +1,6 @@
-package io.github.devsejong.wiki.file.git;
+package io.github.devsejong.wiki.docfile.git;
 
-import io.github.devsejong.wiki.file.FileServiceException;
+import io.github.devsejong.wiki.docfile.DocFileServiceException;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +39,7 @@ public class GitServiceImpl implements GitService {
         try {
             Git.open(new File(workingDirectory)).pull().call();
         } catch (GitAPIException | IOException e) {
-            throw new FileServiceException("Failed to update repository", e);
+            throw new DocFileServiceException("Failed to update repository", e);
         }
     }
 
@@ -47,7 +47,7 @@ public class GitServiceImpl implements GitService {
         try {
             Git.cloneRepository().setURI(gitUrl).setBranch("master").setDirectory(new File(workingDirectory)).call();
         } catch (GitAPIException e) {
-            throw new FileServiceException("Failed to clone repository", e);
+            throw new DocFileServiceException("Failed to clone repository", e);
         }
     }
 

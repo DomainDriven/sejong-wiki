@@ -1,9 +1,9 @@
-package io.github.devsejong.wiki.file;
+package io.github.devsejong.wiki.docfile;
 
 /**
  * Created by sejongpark on 2016. 1. 28..
  */
-public interface FileService {
+public interface DocFileService {
     String read(String path);
 
     void make(String path, String body);

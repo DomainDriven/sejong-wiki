@@ -1,6 +1,6 @@
 package io.github.devsejong.wiki;
 
-import io.github.devsejong.wiki.file.git.GitService;
+import io.github.devsejong.wiki.docfile.git.GitService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
