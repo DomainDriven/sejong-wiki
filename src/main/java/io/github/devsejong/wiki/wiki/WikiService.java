@@ -1,10 +1,13 @@
 package io.github.devsejong.wiki.wiki;
 
+import io.github.devsejong.wiki.docfile.DirectoryContent;
 import io.github.devsejong.wiki.parser.DocType;
 import io.github.devsejong.wiki.parser.ParserService;
 import io.github.devsejong.wiki.docfile.DocFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class WikiService {
@@ -23,6 +26,10 @@ public class WikiService {
     public String readFileAndParse(String wikiPath){
         String rawText = docFileService.read(wikiPath);
         return parserService.parse(DocType.MARKDOWN, rawText);
+    }
+
+    public List<DirectoryContent> getDirContents(String path){
+        return docFileService.getDirContents(path);
     }
 
     //지금은 사용안함.. 삭제할까?

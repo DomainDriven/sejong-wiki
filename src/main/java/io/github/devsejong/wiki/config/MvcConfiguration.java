@@ -13,8 +13,10 @@ public class MvcConfiguration extends WebMvcAutoConfiguration.WebMvcAutoConfigur
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        super.addResourceHandlers(registry);
 
         registry.addResourceHandler("/w/**/_attachments/**")
                 .addResourceLocations("file:" + workingDirectory);
     }
+
 }

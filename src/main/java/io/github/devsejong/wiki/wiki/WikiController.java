@@ -1,13 +1,12 @@
 package io.github.devsejong.wiki.wiki;
 
+import io.github.devsejong.wiki.docfile.DirectoryContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class WikiController {
@@ -28,11 +27,18 @@ public class WikiController {
     }
 
     @RequestMapping(value = "/w/{path:.*}", method = RequestMethod.GET)
-    public String viewWikiPage(Model model, @PathVariable String path) throws IOException {
+    public String viewWikiDoc(Model model, @PathVariable String path) {
         String parsedHtml = wikiService.readFileAndParse(path);
         model.addAttribute("html", parsedHtml);
 
         return "wiki";
+    }
+
+    // 폴더구조를 가져온다.
+    @RequestMapping(value = "/tree", method = RequestMethod.GET)
+    @ResponseBody
+    public List<DirectoryContent> viewWikiPage(@RequestParam String path) {
+        return wikiService.getDirContents(path);
     }
 
 }
