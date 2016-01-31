@@ -42,9 +42,7 @@
         <div class="container-fluid">
 
             <div class="col-lg-12">
-                <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">
-                    Toggle Menu
-                </a>
+                <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
                 <h1>Simple Sidebar</h1>
                 <div class="content">
                 ${html}

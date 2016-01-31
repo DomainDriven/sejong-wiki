@@ -1,5 +1,6 @@
 package io.github.devsejong.wiki.docfile;
 
+
 import io.github.devsejong.wiki.SejongWikiApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,8 +9,10 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.List;
+
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SejongWikiApplication.class)
+@SpringApplicationConfiguration(classes = {SejongWikiApplication.class})
 @WebAppConfiguration
 public class DocFileServiceImplTest {
 
@@ -36,7 +39,9 @@ public class DocFileServiceImplTest {
     }
 
     @Test
-    public void testGetFilePath() throws Exception {
-
+    public void testGetDirContents() throws Exception {
+        List<DirectoryContent> dirContents = docFileService.getDirContents("");
+        System.out.println(dirContents);
+        System.out.println(dirContents);
     }
 }
