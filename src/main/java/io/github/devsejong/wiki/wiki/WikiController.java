@@ -30,6 +30,8 @@ public class WikiController {
     public String viewWikiDoc(Model model, @PathVariable String path) {
         String parsedHtml = wikiService.readFileAndParse(path);
         model.addAttribute("html", parsedHtml);
+        String[] splittedPath = path.split("/");
+        model.addAttribute("title", splittedPath[splittedPath.length - 1]);
 
         return "wiki";
     }
