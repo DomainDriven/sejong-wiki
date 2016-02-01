@@ -110,7 +110,7 @@ public class DocFileServiceImpl implements DocFileService {
         }
 
         DirectoryContent content = new DirectoryContent();
-        content.setId(dirPath + "/" + file.getName());
+        content.setId(Paths.get(dirPath, file.getName()).toString());
         content.setText(file.getName());
         content.setHasChildren(hasChildren);
         content.setType(type);
