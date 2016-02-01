@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.HandlerMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -26,8 +28,11 @@ public class WikiController {
         return "config";
     }
 
-    @RequestMapping(value = "/w/{path:.*}", method = RequestMethod.GET)
-    public String viewWikiDoc(Model model, @PathVariable String path) {
+    @RequestMapping(value = "/w/**", method = RequestMethod.GET)
+    public String viewWikiDoc(Model model, HttpServletRequest req) {
+        String path = (String) req.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+        path = path.replace("/w/", "");
+
         String parsedHtml = wikiService.readFileAndParse(path);
         model.addAttribute("html", parsedHtml);
         String[] splittedPath = path.split("/");

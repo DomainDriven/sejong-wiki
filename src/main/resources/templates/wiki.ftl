@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
     <link rel="stylesheet" href="/asset/css/sidebar.css">
 
-
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -44,7 +43,7 @@
                 <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
                 <h1>${title}</h1>
                 <div class="content">
-                ${html}
+                    ${html}
                 </div>
             </div>
         </div>
@@ -89,11 +88,6 @@
             }
         },
         "types": {
-            "#": {
-                "max_children": 1,
-                "max_depth": 4,
-                "valid_children": ["root"]
-            },
             "root": {
                 "icon": "/static/3.2.1/assets/images/tree_icon.png"
             },
@@ -105,11 +99,12 @@
             }
         },
         "plugins": [
-            "contextmenu", "dnd", "search",
-            "state", "types", "wholerow"
+            //"dnd",//"search", //"state",
+            "types", "wholerow"
         ]
-    }).on("changed.jstree", function (e, data) {
-        console.log(data.selected);
+    }).on("select_node.jstree", function (e, data) {
+        if(data.node.type === "FILE")
+            location.href = "/w/" + data.node.id;
     });
 </script>
 
