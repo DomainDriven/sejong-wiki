@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 101 Template</title>
+    <title>${title}</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
@@ -40,10 +40,9 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-
             <div class="col-lg-12">
                 <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
-                <h1>Simple Sidebar</h1>
+                <h1>${title}</h1>
                 <div class="content">
                 ${html}
                 </div>

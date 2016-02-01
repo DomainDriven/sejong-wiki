@@ -1,4 +1,4 @@
-package io.github.devsejong.wiki.parser.docparser;
+package io.github.devsejong.wiki.parser.operator;
 
 import org.junit.Test;
 

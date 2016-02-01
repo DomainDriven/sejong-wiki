@@ -1,4 +1,4 @@
-package io.github.devsejong.wiki.parser.docparser;
+package io.github.devsejong.wiki.parser.operator;
 
 public class HtmlParser implements Parser {
 

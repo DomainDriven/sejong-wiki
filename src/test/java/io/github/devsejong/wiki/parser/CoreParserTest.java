@@ -8,17 +8,17 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import static io.github.devsejong.wiki.parser.DocType.MARKDOWN;
+import static io.github.devsejong.wiki.parser.DocumentType.MARKDOWN;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SejongWikiApplication.class)
 @WebAppConfiguration
-public class ParserServiceTest {
+public class CoreParserTest {
 
     @Autowired
-    ParserService parserService;
+    CoreParser parserService;
 
     @Test
     public void stestParse() throws Exception {
@@ -30,7 +30,7 @@ public class ParserServiceTest {
 
     @Test
     public void testGetDocType() throws Exception {
-        DocType md = parserService.getDocType("md");
+        DocumentType md = parserService.getDocType("md");
         assertThat(md, is(MARKDOWN));
     }
 }

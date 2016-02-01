@@ -1,5 +1,6 @@
-package io.github.devsejong.wiki.parser.docparser;
+package io.github.devsejong.wiki.parser.operator;
 
+// Text문자열일 경우에 <br>로 변경하여 준다.
 public class TextParser implements Parser {
 
     @Override
@@ -9,6 +10,6 @@ public class TextParser implements Parser {
 
     @Override
     public String parse(String source) {
-        return source;
+        return source.replaceAll("\r\n|\n|\r", "<br>");
     }
 }
