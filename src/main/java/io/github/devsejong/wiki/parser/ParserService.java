@@ -32,6 +32,6 @@ public class ParserService {
             if (parsers.get(docType).isParsable(fileExtension))
                 return docType;
 
-        throw new ParserException("Cannot find Paser mapped with file extension. fileExtension : " + fileExtension);
+        throw new ParserException("Cannot find Parser mapped with file extension. fileExtension : " + fileExtension);
     }
 }
