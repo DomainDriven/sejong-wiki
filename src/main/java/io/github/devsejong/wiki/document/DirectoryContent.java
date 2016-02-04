@@ -1,4 +1,4 @@
-package io.github.devsejong.wiki.docfile;
+package io.github.devsejong.wiki.document;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

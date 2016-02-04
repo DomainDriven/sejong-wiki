@@ -1,6 +1,7 @@
 package io.github.devsejong.wiki.wiki;
 
-import io.github.devsejong.wiki.docfile.DirectoryContent;
+import io.github.devsejong.wiki.document.DirectoryContent;
+import io.github.devsejong.wiki.document.DocumentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,10 +34,17 @@ public class WikiController {
         String path = (String) req.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
         path = path.replace("/w/", "");
 
-        String parsedHtml = wikiService.readFileAndParse(path);
-        model.addAttribute("html", parsedHtml);
-        String[] splittedPath = path.split("/");
-        model.addAttribute("title", splittedPath[splittedPath.length - 1]);
+        try{
+            String parsedHtml = wikiService.readFileAndParse(path);
+            model.addAttribute("html", parsedHtml);
+            String[] splittedPath = path.split("/");
+            model.addAttribute("title", splittedPath[splittedPath.length - 1]);
+        }
+        // 문서가 없을 경우에 대한 처리..
+        catch(DocumentNotFoundException e){
+            model.addAttribute("html", "<h1>문서를 찾지 못했습니다.</h1>");
+            model.addAttribute("title", "404..");
+        }
 
         return "wiki";
     }

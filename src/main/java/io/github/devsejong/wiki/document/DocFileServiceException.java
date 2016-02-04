@@ -1,4 +1,4 @@
-package io.github.devsejong.wiki.docfile;
+package io.github.devsejong.wiki.document;
 
 public class DocFileServiceException extends RuntimeException {
     public DocFileServiceException(String message, Throwable cause) {

@@ -104,7 +104,7 @@
         ]
     }).on("select_node.jstree", function (e, data) {
         if(data.node.type === "FILE")
-            location.href = "/w/" + data.node.id;
+            location.href = "/w" + data.node.id;
     });
 </script>
 

@@ -1,4 +1,4 @@
-package io.github.devsejong.wiki.docfile.git;
+package io.github.devsejong.wiki.document.git;
 
 public interface GitService {
 

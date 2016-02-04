@@ -1,4 +1,4 @@
-package io.github.devsejong.wiki.docfile;
+package io.github.devsejong.wiki.document;
 
 
 import io.github.devsejong.wiki.SejongWikiApplication;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {SejongWikiApplication.class})
 @WebAppConfiguration
-public class DocFileServiceImplTest {
+public class DocFileServiceTest {
 
     @Autowired
     DocFileService service;
@@ -25,11 +25,21 @@ public class DocFileServiceImplTest {
     @Test
     public void testRead() throws Exception {
         //when
-        String read = service.read("test.md");
+        Document document = service.read("test.md");
 
         //then
-        assertThat(read, CoreMatchers.containsString("- 안녕"));
-        assertThat(read, CoreMatchers.containsString("- Hello"));
+        assertThat(document.getBody(), CoreMatchers.containsString("- 안녕"));
+        assertThat(document.getBody(), CoreMatchers.containsString("- Hello"));
+    }
+
+    @Test(expected = DocumentNotFoundException.class)
+    public void testWhenReadNotExistFile_throw(){
+        service.read("not/readable/path");
+    }
+
+    @Test(expected = DocumentNotFoundException.class)
+    public void testWhenReadFolder_throw(){
+        service.read("dummy");
     }
 
     @Test
@@ -60,4 +70,5 @@ public class DocFileServiceImplTest {
         assertThat(dirContents.get(1).getText(), CoreMatchers.is("markup"));
         assertThat(dirContents.get(2).getText(), CoreMatchers.is("test.md"));
     }
+
 }

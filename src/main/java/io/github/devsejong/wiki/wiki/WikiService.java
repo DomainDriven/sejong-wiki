@@ -1,9 +1,9 @@
 package io.github.devsejong.wiki.wiki;
 
-import io.github.devsejong.wiki.docfile.DirectoryContent;
+import io.github.devsejong.wiki.document.DirectoryContent;
+import io.github.devsejong.wiki.document.DocFileService;
 import io.github.devsejong.wiki.parser.DocumentType;
 import io.github.devsejong.wiki.parser.CoreParser;
-import io.github.devsejong.wiki.docfile.DocFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class WikiService {
      * @return
      */
     public String readFileAndParse(String wikiPath){
-        String rawText = docFileService.read(wikiPath);
+        String rawText = docFileService.read(wikiPath).getBody();
         return CoreParser.parse(DocumentType.MARKDOWN, rawText);
     }
 

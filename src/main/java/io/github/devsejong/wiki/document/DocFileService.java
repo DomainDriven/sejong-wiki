@@ -1,6 +1,6 @@
-package io.github.devsejong.wiki.docfile;
+package io.github.devsejong.wiki.document;
 
-import io.github.devsejong.wiki.docfile.git.GitService;
+import io.github.devsejong.wiki.document.git.GitService;
 import org.eclipse.jgit.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,11 +20,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.github.devsejong.wiki.docfile.FileType.DIRECTORY;
-import static io.github.devsejong.wiki.docfile.FileType.FILE;
+import static io.github.devsejong.wiki.document.FileType.DIRECTORY;
+import static io.github.devsejong.wiki.document.FileType.FILE;
 
 @Service
-public class DocFileServiceImpl implements DocFileService {
+public class DocFileService {
 
     @Value("${wiki.workingDirectory}")
     String workingDirectory;
@@ -36,40 +36,39 @@ public class DocFileServiceImpl implements DocFileService {
     Set<String> ignoreFileSet;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         ignoreFileSet = new HashSet<>();
         Collections.addAll(ignoreFileSet, ignoreFiles.split("\\|"));
     }
 
-    @Override
-    public String read(String path) {
+    public Document read(String path) {
         Path filePath = this.getFilePath(path);
+
+        if (Files.notExists(filePath) || Files.isDirectory(filePath))
+            throw new DocumentNotFoundException();
+
         try {
             List<String> lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
-            return StringUtils.join(lines, "\n");
+            String body = StringUtils.join(lines, "\n");
+            return new Document(path, body);
         } catch (IOException e) {
             throw new DocFileServiceException("Failed to read data", e);
         }
     }
 
-    @Override
     public void make(String path, String body) {
         throw new DocFileServiceException("작업 중!!");
     }
 
-    @Override
     public void modify(String path, String body, String history) {
         throw new DocFileServiceException("작업 중!!");
     }
 
-    @Override
     public void delete(String path) {
         throw new DocFileServiceException("작업 중!!");
     }
 
-
     //FIXME 이름이 마음에 들지 않아...
-    @Override
     public List<DirectoryContent> getDirContents(String dirPath) {
 
         Stream<Path> list;

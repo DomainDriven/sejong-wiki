@@ -1,6 +1,6 @@
-package io.github.devsejong.wiki.docfile.git;
+package io.github.devsejong.wiki.document.git;
 
-import io.github.devsejong.wiki.docfile.DocFileServiceException;
+import io.github.devsejong.wiki.document.DocFileServiceException;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.springframework.beans.factory.annotation.Value;

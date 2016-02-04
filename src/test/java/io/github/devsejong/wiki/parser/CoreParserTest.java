@@ -10,7 +10,7 @@ public class CoreParserTest {
 
 
     @Test
-    public void stestParse() throws Exception {
+    public void testParse() throws Exception {
         // when
         String html = CoreParser.parse(MARKDOWN, "# 제목입니다.");
         //then
