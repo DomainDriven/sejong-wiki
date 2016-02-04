@@ -2,6 +2,7 @@ package io.github.devsejong.wiki.wiki;
 
 import io.github.devsejong.wiki.document.DirectoryContent;
 import io.github.devsejong.wiki.document.DocFileService;
+import io.github.devsejong.wiki.document.Document;
 import io.github.devsejong.wiki.parser.DocumentType;
 import io.github.devsejong.wiki.parser.CoreParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,21 @@ public class WikiService {
      * @param wikiPath
      * @return
      */
-    public String readFileAndParse(String wikiPath){
-        String rawText = docFileService.read(wikiPath).getBody();
-        return CoreParser.parse(DocumentType.MARKDOWN, rawText);
+    public String parse(Document document){
+        String path = document.getPath();
+        DocumentType docType = CoreParser.getDocType(getFileExtension(path));
+        String rawText = docFileService.read(path).getBody();
+        return CoreParser.parse(docType, rawText);
+    }
+
+    public Document getDocument(String wikiPath){
+        return docFileService.read(wikiPath);
     }
 
     public List<DirectoryContent> getDirContents(String path){
         return docFileService.getDirContents(path);
     }
 
-    //지금은 사용안함.. 삭제할까?
     private static String getFileExtension(String wikiPath){
         String fileName = wikiPath.substring(wikiPath.lastIndexOf("/"));
         return fileName.substring(fileName.lastIndexOf("."));
