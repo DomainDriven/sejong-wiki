@@ -53,7 +53,7 @@ public class WikiController {
     }
 
     //페이지 수정
-    @RequestMapping(value = "/w/**", params = "action=edit", method = RequestMethod.GET)
+    @RequestMapping(value = "/w/**", params = "mode=edit", method = RequestMethod.GET)
     public String editWikiDoc(HttpServletRequest req, Model model) {
         String path = getPathFromUrl(req);
         Document document = wikiService.getDocument(path);
