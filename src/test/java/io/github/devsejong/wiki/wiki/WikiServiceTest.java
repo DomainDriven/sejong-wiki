@@ -1,6 +1,7 @@
 package io.github.devsejong.wiki.wiki;
 
 import io.github.devsejong.wiki.SejongWikiApplication;
+import io.github.devsejong.wiki.document.Document;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class WikiServiceTest {
     @Test
     public void testReadFileAndParse() throws Exception {
         //<when>
-        String doc = wikiService.readFileAndParse("test.md");
+        Document doc = wikiService.getDocument("test.md");
         //<then>
-        assertThat(doc, containsString("<li>Hello</li>"));
+        assertThat(doc.getBody(), containsString("<li>Hello</li>"));
     }
 }
