@@ -18,17 +18,39 @@
             padding: 0;
         }
 
-        #preview {
+        /* CSS는 정리필요!! */
+        .preview {
             position: absolute;
-            border: black 1px solid;
-            background-color: bisque;
-            top: 0;
-            bottom: 0;
+            border-left: black 1px solid;
+            overflow-y: scroll;
+            padding-left : 10px;
+            top: 50px;
+            bottom: 50px;
             left: 50%;
             right: 0;
         }
-    </style>
 
+        .editor {
+            position: absolute;
+            border-left: black 1px solid;
+            overflow-y: scroll;
+            top: 50px;
+            bottom: 50px;
+            left: 0;
+            right: 50%;
+        }
+
+        .path-wrapper > h1 {
+            margin: 0;
+        }
+
+        .editor-button {
+            position: absolute;
+            bottom: 0;
+            right : 0;
+            margin : 10px;
+        }
+    </style>
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -37,8 +59,31 @@
 </head>
 <body>
 
-<textarea id="documentBody" style="display:none">${html}</textarea>
-<div id="preview"></div>
+<div class="wrapper">
+
+    <div class="path-wrapper">
+        <h1 class="path">
+            <small>path :</small>${path}</h1>
+    </div>
+
+    <div class="editor-wrapper">
+        <div class="editor">
+            <textarea id="documentBody" style="display:none">${body}</textarea>
+        </div>
+        <div class="preview"></div>
+    </div>
+
+    <div class="editor-button">
+        <form class="form-inline">
+            <div class="form-group" style="margin-right:20px">
+                <input type="text" class="form-control" id="versionComment" placeholder="What did you change?">
+            </div>
+            <button type="submit" class="btn btn-default">Save</button>
+            <button class="btn btn-default">Close</button>
+        </form>
+    </div>
+
+</div>
 
 <#--<!-- jQuery (necessary for Bootstrap's JavaScript plugins) &ndash;&gt;-->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
@@ -49,13 +94,35 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/javascript/javascript.min.js"></script>
-<script>
-    var cm = CodeMirror.fromTextArea(document.getElementById("documentBody"), {
-        lineNumbers: true,
-        matchBrackets: true,
-    });
 
-    cm.setSize("50%", "100%");
+<script>
+    var textArea = document.getElementById("documentBody");
+    var cm = CodeMirror(function (elt) {
+        textArea.parentNode.replaceChild(elt, textArea);
+    }, {
+        value: textArea.value,
+        lineNumbers: true,
+        matchBrackets: true
+    });
+    cm.setSize("100%", "100%");
+
+    var parseBody = function (body, docType) {
+        $.get("/wiki/parsing", {"body": body, docType: docType}).success(function (data) {
+            $(".preview").html(data);
+        });
+    };
+
+    var tmpBody = "";
+
+    // 2초마다 검사하여, 변경사항이 있을 경우 파싱.
+    setInterval(function () {
+        var body = cm.getValue();
+        if (tmpBody !== body) {
+            tmpBody = body;
+            // TODO 문서타입 가져오기.
+            parseBody(body, "md");
+        }
+    }, 1000)
 </script>
 
 </body>

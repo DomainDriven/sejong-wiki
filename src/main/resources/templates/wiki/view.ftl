@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
-    <link rel="stylesheet" href="/asset/css/sidebar.css">
+    <link rel="stylesheet" href="/asset/css/wiki.css">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -73,7 +73,7 @@
             "check_callback": true,
             'data': {
                 'url': function (node) {
-                    return "/tree";
+                    return "/wiki/tree";
                     //return node.id === '#' ?'ajax_demo_roots.json' : 'ajax_demo_children.json';
                 },
                 'data': function (node) {

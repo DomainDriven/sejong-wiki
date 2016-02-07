@@ -3,6 +3,8 @@ package io.github.devsejong.wiki.wiki;
 import io.github.devsejong.wiki.document.DirectoryContent;
 import io.github.devsejong.wiki.document.Document;
 import io.github.devsejong.wiki.document.DocumentNotFoundException;
+import io.github.devsejong.wiki.parser.CoreParser;
+import io.github.devsejong.wiki.parser.DocumentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,16 +59,24 @@ public class WikiController {
     public String editWikiDoc(HttpServletRequest req, Model model) {
         String path = getPathFromUrl(req);
         Document document = wikiService.getDocument(path);
-        model.addAttribute("html", document.getBody());
+        model.addAttribute("path", path);
+        model.addAttribute("body", document.getBody());
 
         return "wiki/edit";
     }
 
     // 폴더구조를 가져온다.
-    @RequestMapping(value = "/tree", method = RequestMethod.GET)
+    @RequestMapping(value = "/wiki/tree", method = RequestMethod.GET)
     @ResponseBody
-    public List<DirectoryContent> viewWikiPage(@RequestParam String path) {
+    public List<DirectoryContent> getCategoryTree(@RequestParam String path) {
         return wikiService.getDirContents(path);
+    }
+
+    @RequestMapping(value="/wiki/parsing")
+    @ResponseBody
+    public String getParsedHtml(@RequestParam String body, @RequestParam String docType){
+        DocumentType type = CoreParser.getDocType(docType);
+        return CoreParser.parse(type, body);
     }
 
     private String getPathFromUrl(HttpServletRequest req) {
