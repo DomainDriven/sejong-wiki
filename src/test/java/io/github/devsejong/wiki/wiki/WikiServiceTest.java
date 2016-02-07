@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,10 +22,23 @@ public class WikiServiceTest {
     WikiService wikiService;
 
     @Test
-    public void testReadFileAndParse() throws Exception {
+    public void testRead() throws Exception {
         //<when>
         Document doc = wikiService.getDocument("test.md");
         //<then>
         assertThat(doc.getBody(), containsString("<li>Hello</li>"));
+    }
+
+    @Test
+    public void testGetFileExtension(){
+        //<when>
+        String fileExtension = WikiService.getFileExtension("aaa/bbbb/cccc.md");
+        //<then>
+        assertThat(fileExtension, is("md"));
+
+        //<when>
+        String fileExtension2 = WikiService.getFileExtension("dummy.md");
+        //<then>
+        assertThat(fileExtension2, is("md"));
     }
 }

@@ -37,9 +37,17 @@ public class WikiService {
         return docFileService.getDirContents(path);
     }
 
-    private static String getFileExtension(String wikiPath){
-        String fileName = wikiPath.substring(wikiPath.lastIndexOf("/"));
-        return fileName.substring(fileName.lastIndexOf("."));
+    static String getFileExtension(String wikiPath){
+
+        int pathSeperatorIndex = wikiPath.lastIndexOf("/");
+
+        String fileName;
+        if(pathSeperatorIndex != -1)
+            fileName = wikiPath.substring(pathSeperatorIndex);
+        else
+            fileName = wikiPath;
+
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
 }
