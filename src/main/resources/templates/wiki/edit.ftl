@@ -21,36 +21,43 @@
         /* CSS는 정리필요!! */
         .preview {
             position: absolute;
-            border-left: black 1px solid;
+            border-left: lightgray 1px solid;
             overflow-y: scroll;
             padding-left : 10px;
             top: 50px;
-            bottom: 50px;
+            bottom: 55px;
             left: 50%;
             right: 0;
         }
 
         .editor {
             position: absolute;
-            border-left: black 1px solid;
+            border-left: lightgray 1px solid;
             overflow-y: scroll;
             top: 50px;
-            bottom: 50px;
+            bottom: 55px;
             left: 0;
             right: 50%;
+        }
+
+        .path-wrapper{
+            border-bottom : 1px solid lightgray;
+            padding : 5px;
         }
 
         .path-wrapper > h1 {
             margin: 0;
         }
 
-        .editor-button {
+        .editor-form-wrapper {
             position: absolute;
             bottom: 0;
             right : 0;
-            margin : 10px;
+            width : 100%;
+            padding : 10px;
+            text-align: right;
+            border-top : 1px solid lightgray;
         }
-
         .form-group {
             margin-right: 20px;
         }
@@ -87,7 +94,7 @@
         <div class="preview"></div>
     </div>
 
-    <div class="editor-button">
+    <div class="editor-form-wrapper">
         <form class="form-inline" method="post" action="/w/${path}">
             <input type="hidden" name="body" id="inputBody">
             <div class="form-group">
