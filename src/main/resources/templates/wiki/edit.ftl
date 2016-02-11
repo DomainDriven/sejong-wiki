@@ -50,6 +50,18 @@
             right : 0;
             margin : 10px;
         }
+
+        .form-group {
+            margin-right: 20px;
+        }
+
+        .form-group {
+            margin-right: 20px;
+        }
+
+        #documentBody {
+            display: none;
+        }
     </style>
 
     <!--[if lt IE 9]>
@@ -63,20 +75,23 @@
 
     <div class="path-wrapper">
         <h1 class="path">
-            <small>path :</small>${path}</h1>
+            <small>path :</small>
+            ${path}
+        </h1>
     </div>
 
     <div class="editor-wrapper">
         <div class="editor">
-            <textarea id="documentBody" style="display:none">${body}</textarea>
+            <textarea id="documentBody">${body}</textarea>
         </div>
         <div class="preview"></div>
     </div>
 
     <div class="editor-button">
-        <form class="form-inline">
-            <div class="form-group" style="margin-right:20px">
-                <input type="text" class="form-control" id="versionComment" placeholder="What did you change?">
+        <form class="form-inline" method="post" action="/w/${path}">
+            <input type="hidden" name="body" id="inputBody">
+            <div class="form-group">
+                <input type="text" class="form-control" name="comment" id="versionComment" placeholder="What did you change?">
             </div>
             <button type="submit" class="btn btn-default">Save</button>
             <button class="btn btn-default">Close</button>
@@ -122,7 +137,17 @@
             // TODO 문서타입 가져오기.
             parseBody(body, "md");
         }
-    }, 1000)
+    }, 1000);
+
+    //저장 버튼을 누를 경우 서버로 정보를 전달한다.
+    $(".editor-button").on("submit", function(e){
+        if(confirm("저장하시겠습니까?")){
+            var body = cm.getValue();
+            $("#inputBody").value(body);
+        } else {
+            return false;
+        }
+    });
 </script>
 
 </body>

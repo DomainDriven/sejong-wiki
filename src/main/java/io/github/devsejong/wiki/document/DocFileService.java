@@ -56,12 +56,12 @@ public class DocFileService {
         }
     }
 
-    public void make(String path, String body) {
+    public void create(String path, String body) {
         throw new DocFileServiceException("작업 중!!");
     }
 
     public void modify(String path, String body, String history) {
-        throw new DocFileServiceException("작업 중!!");
+
     }
 
     public void delete(String path) {

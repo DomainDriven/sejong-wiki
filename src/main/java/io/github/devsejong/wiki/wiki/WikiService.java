@@ -19,7 +19,7 @@ public class WikiService {
     /**
      * path의 파일을 읽은 뒤 파싱 결과를 반환한다.
      *
-     * @param wikiPath
+     * @param document
      * @return
      */
     public String parse(Document document){
@@ -27,6 +27,9 @@ public class WikiService {
         DocumentType docType = CoreParser.getDocType(getFileExtension(path));
         String rawText = docFileService.read(path).getBody();
         return CoreParser.parse(docType, rawText);
+    }
+    public void save(String path, String body, String comment){
+        docFileService.modify(path, body, comment);
     }
 
     public Document getDocument(String wikiPath){

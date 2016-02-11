@@ -65,6 +65,14 @@ public class WikiController {
         return "wiki/edit";
     }
 
+    @RequestMapping(value = "/w/**", method = RequestMethod.POST)
+    public String saveWikiDoc(HttpServletRequest req, String body, String comment) {
+        String path = getPathFromUrl(req);
+        wikiService.save(path, body, comment);
+
+        return "redirect:/w/" + path;
+    }
+
     // 폴더구조를 가져온다.
     @RequestMapping(value = "/wiki/tree", method = RequestMethod.GET)
     @ResponseBody
@@ -72,9 +80,9 @@ public class WikiController {
         return wikiService.getDirContents(path);
     }
 
-    @RequestMapping(value="/wiki/parsing")
+    @RequestMapping(value = "/wiki/parsing")
     @ResponseBody
-    public String getParsedHtml(@RequestParam String body, @RequestParam String docType){
+    public String getParsedHtml(@RequestParam String body, @RequestParam String docType) {
         DocumentType type = CoreParser.getDocType(docType);
         return CoreParser.parse(type, body);
     }
