@@ -8,9 +8,12 @@
     <title>타이틀은 없어!</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css">
+    <link rel="stylesheet"
+          href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css">
     <style>
         html, body {
             height: 100%;
@@ -23,7 +26,7 @@
             position: absolute;
             border-left: lightgray 1px solid;
             overflow-y: scroll;
-            padding-left : 10px;
+            padding-left: 10px;
             top: 50px;
             bottom: 55px;
             left: 50%;
@@ -40,9 +43,9 @@
             right: 50%;
         }
 
-        .path-wrapper{
-            border-bottom : 1px solid lightgray;
-            padding : 5px;
+        .path-wrapper {
+            border-bottom: 1px solid lightgray;
+            padding: 5px;
         }
 
         .path-wrapper > h1 {
@@ -52,12 +55,13 @@
         .editor-form-wrapper {
             position: absolute;
             bottom: 0;
-            right : 0;
-            width : 100%;
-            padding : 10px;
+            right: 0;
+            width: 100%;
+            padding: 10px;
             text-align: right;
-            border-top : 1px solid lightgray;
+            border-top: 1px solid lightgray;
         }
+
         .form-group {
             margin-right: 20px;
         }
@@ -83,7 +87,7 @@
     <div class="path-wrapper">
         <h1 class="path">
             <small>path :</small>
-            ${path}
+        ${path}
         </h1>
     </div>
 
@@ -95,13 +99,15 @@
     </div>
 
     <div class="editor-form-wrapper">
-        <form class="form-inline" method="post" action="/w/${path}">
+        <form class="form-inline" method="post" id="editForm"
+              action="/w/${path}">
             <input type="hidden" name="body" id="inputBody">
             <div class="form-group">
-                <input type="text" class="form-control" name="comment" id="versionComment" placeholder="What did you change?">
+                <input type="text" class="form-control" name="comment"
+                       id="versionComment" placeholder="What did you change?">
             </div>
-            <button type="submit" class="btn btn-default">Save</button>
-            <button class="btn btn-default">Close</button>
+            <input class="btn btn-default" type="submit" id="editSave" value="Save">
+            <input type="button" class="btn btn-default" id="editCancel" value="Cancel">
         </form>
     </div>
 
@@ -129,7 +135,10 @@
     cm.setSize("100%", "100%");
 
     var parseBody = function (body, docType) {
-        $.get("/wiki/parsing", {"body": body, docType: docType}).success(function (data) {
+        $.get("/wiki/parsing", {
+            "body": body,
+            docType: docType
+        }).success(function (data) {
             $(".preview").html(data);
         });
     };
@@ -147,13 +156,18 @@
     }, 1000);
 
     //저장 버튼을 누를 경우 서버로 정보를 전달한다.
-    $(".editor-button").on("submit", function(e){
-        if(confirm("저장하시겠습니까?")){
+    $("#editForm").on("submit", function (e) {
+        if (confirm("저장하시겠습니까?")) {
             var body = cm.getValue();
             $("#inputBody").value(body);
         } else {
             return false;
         }
+    });
+
+    //취소버튼을 선택할 경우 리스트페이지로 이동한다.
+    $("#editCancel").on("click", function () {
+        location.href = $("#editForm").attr("action");
     });
 </script>
 
