@@ -26,7 +26,7 @@ public class WikiServiceTest {
         //<when>
         Document doc = wikiService.getDocument("test.md");
         //<then>
-        assertThat(doc.getBody(), containsString("<li>Hello</li>"));
+        assertThat(doc.getBody(), containsString("# 제목"));
     }
 
     @Test

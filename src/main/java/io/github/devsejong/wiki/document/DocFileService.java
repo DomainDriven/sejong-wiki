@@ -1,6 +1,7 @@
 package io.github.devsejong.wiki.document;
 
 import io.github.devsejong.wiki.document.git.GitService;
+import io.github.devsejong.wiki.document.util.DocFilePathHolder;
 import org.eclipse.jgit.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,21 +18,21 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static io.github.devsejong.wiki.document.FileType.DIRECTORY;
 import static io.github.devsejong.wiki.document.FileType.FILE;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class DocFileService {
-
-    @Value("${wiki.workingDirectory}")
-    String workingDirectory;
     @Value("${wiki.ignoreFiles}")
     String ignoreFiles;
     @Autowired
     GitService gitService;
+
+    @Autowired
+    DocFilePathHolder docFilePathHolder;
 
     Set<String> ignoreFileSet;
 
@@ -74,11 +75,11 @@ public class DocFileService {
         Stream<Path> list;
         try {
             list = Files.list(getFilePath(dirPath));
-
             return list.filter(this::isNotIgnoreFile)
                     .map(p -> getDirectoryContent(dirPath, p))
                     .sorted(this::directoryContentsCompare)
-                    .collect(Collectors.toList());
+                    .collect(toList());
+
         } catch (IOException e) {
             throw new DocFileServiceException("해당 디렉토리를 찾을 수 없습니다.", e);
         }
@@ -117,12 +118,11 @@ public class DocFileService {
         return content;
     }
 
-
     Path getFilePath(String path) {
         if (!path.startsWith("/"))
             path = "/" + path;
 
-        return Paths.get(workingDirectory + path);
+        return Paths.get(docFilePathHolder.getWorkingDirectory() + path);
     }
 
 }

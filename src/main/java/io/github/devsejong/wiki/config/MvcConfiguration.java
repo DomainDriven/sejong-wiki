@@ -8,7 +8,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 
 @Configuration
 public class MvcConfiguration extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter {
-    @Value("${wiki.workingDirectory}")
+
+    @Value("${wiki.workingDirectory:wiki.defaultWorkingDirectory}")
     Resource workingDirectory;
 
     @Override
