@@ -2,7 +2,9 @@ package io.github.devsejong.wiki.document.git;
 
 import io.github.devsejong.wiki.document.DocFileServiceException;
 import io.github.devsejong.wiki.document.util.DocFilePathHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.PullResult;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +20,7 @@ import java.nio.file.Paths;
 
 @Service
 @Profile("!unitTest")
+@Slf4j
 public class GitServiceImpl implements GitService {
 
     @Value("${wiki.gitUrl}")
@@ -45,17 +48,18 @@ public class GitServiceImpl implements GitService {
     @Scheduled(fixedDelay = 1000 * 60)
     public void update() {
         try {
-            Git.open(
+            PullResult call = Git.open(
                     new File(docFilePathHolder.getWorkingDirectory())
             ).pull().call();
+
+            if (call.isSuccessful())
+                log.debug("git저장소와 동기화 성공");
+            else
+                log.error("실패");
+
         } catch (GitAPIException | IOException e) {
             throw new DocFileServiceException("Failed to update repository", e);
         }
-    }
-
-    @Scheduled(fixedDelay = 100)
-    public void get(){
-        System.out.println("test!!");
     }
 
     //깃헙과 연동되는 부분은 추후 작업 예정
