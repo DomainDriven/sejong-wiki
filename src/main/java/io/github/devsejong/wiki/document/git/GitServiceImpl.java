@@ -7,10 +7,12 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -23,7 +25,6 @@ public class GitServiceImpl implements GitService {
 
     @Autowired
     DocFilePathHolder docFilePathHolder;
-
 
     @PostConstruct
     private void initWiki() {
@@ -41,13 +42,20 @@ public class GitServiceImpl implements GitService {
     }
 
     //깃헙과 연동되는 부분은 추후 작업.
-    @Override
+    @Scheduled(fixedDelay = 1000 * 60)
     public void update() {
-//        try {
-//            Git.open(new File(workingDirectory)).pull().call();
-//        } catch (GitAPIException | IOException e) {
-//            throw new DocFileServiceException("Failed to update repository", e);
-//        }
+        try {
+            Git.open(
+                    new File(docFilePathHolder.getWorkingDirectory())
+            ).pull().call();
+        } catch (GitAPIException | IOException e) {
+            throw new DocFileServiceException("Failed to update repository", e);
+        }
+    }
+
+    @Scheduled(fixedDelay = 100)
+    public void get(){
+        System.out.println("test!!");
     }
 
     //깃헙과 연동되는 부분은 추후 작업 예정

@@ -11,10 +11,9 @@ public class TestConfiguration {
     @Bean
     public GitService gitService(){
         return new GitService() {
-            @Override
-            public void update() {
-
-            }
+//            public void update() {
+//
+//            }
         };
     }
 }
