@@ -39,7 +39,10 @@ dependencies {
     compile('org.projectlombok:lombok:1.16.6')
     compile('org.eclipse.jgit:org.eclipse.jgit:4.1.1.201511131810-r')
 
+	//markdown
 	compile('org.pegdown:pegdown:1.6.0')
+	//asciidoc
+	compile('org.asciidoctor:asciidoctorj:1.5.2')
 }
 
 
