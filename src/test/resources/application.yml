@@ -2,8 +2,8 @@ wiki:
   # TODO ignoreFiles는 리스트를 사용할 수 있도록 변경하기.
   ignoreFiles: .DS_Store|_attachements|.git|.gitignore
   defaultWorkingDirectory: ${user.dir}/wiki
-  wiki.workingDirectory: ${user.dir}/src/test/resources/wikifile
-  wiki.gitUrl: doNothing
+  workingDirectory: ${user.dir}/src/test/resources/wikifile
+  gitUrl: doNothing
 spring:
   profiles.active: unitTest
 
