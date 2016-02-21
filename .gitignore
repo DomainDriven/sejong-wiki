@@ -97,6 +97,3 @@ gradle-app.setting
 
 # 내부에 클론되는 위키 폴더는 기본적으로 ignore처리한다.
 wiki/
-
-# 위키 설정파일은 무시처리한다.
-src/main/resources/wikiConfig.properties

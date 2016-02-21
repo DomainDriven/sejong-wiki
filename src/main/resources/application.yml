@@ -5,3 +5,18 @@ wiki:
 
 spring:
   profiles.active: dev
+
+---
+spring:
+  profiles: dev
+
+wiki:
+  gitUrl: https://github.com/devsejong/TIL.git
+
+---
+spring:
+  profiles: production
+
+wiki:
+  gitUrl: NeedOverride
+  workingDirectory: NeedOverride
