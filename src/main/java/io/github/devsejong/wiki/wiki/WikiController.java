@@ -6,12 +6,10 @@ import io.github.devsejong.wiki.document.DocumentNotFoundException;
 import io.github.devsejong.wiki.parser.CoreParser;
 import io.github.devsejong.wiki.parser.DocumentType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,17 +37,19 @@ public class WikiController {
     public String viewWikiDoc(HttpServletRequest req, Model model) {
         String path = getPathFromUrl(req);
 
-        try {
-            Document document = wikiService.getDocument(path);
-            model.addAttribute("html", wikiService.parse(document));
-            String[] splittedPath = path.split("/");
-            model.addAttribute("title", splittedPath[splittedPath.length - 1]);
-        }
-        // 문서가 없을 경우에 대한 처리..
-        catch (DocumentNotFoundException e) {
-            model.addAttribute("html", "<h1>문서를 찾지 못했습니다.</h1>");
-            model.addAttribute("title", "404..");
-        }
+        Document document = wikiService.getDocument(path);
+        model.addAttribute("html", wikiService.parse(document));
+        model.addAttribute("title", getTitle(path));
+
+        return "wiki/view";
+    }
+
+    // 문서가 없을 경우에 대한 처리..
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(DocumentNotFoundException.class)
+    public String documentNotExist(Model model){
+        model.addAttribute("html", "문서 추가 기능은 작업 중.");
+        model.addAttribute("title", "문서를 찾지 못하였습니다.");
 
         return "wiki/view";
     }
@@ -58,6 +58,7 @@ public class WikiController {
     @RequestMapping(value = "/w/**", params = "mode=edit", method = RequestMethod.GET)
     public String editWikiDoc(HttpServletRequest req, Model model) {
         String path = getPathFromUrl(req);
+
         Document document = wikiService.getDocument(path);
         model.addAttribute("path", path);
         model.addAttribute("body", document.getBody());
@@ -93,4 +94,8 @@ public class WikiController {
         return path;
     }
 
+    private String getTitle(String path) {
+        String[] splittedPath = path.split("/");
+        return splittedPath[splittedPath.length - 1];
+    }
 }
