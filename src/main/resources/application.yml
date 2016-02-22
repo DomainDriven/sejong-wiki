@@ -19,4 +19,5 @@ spring:
 
 wiki:
   gitUrl: NeedOverride
-  workingDirectory: NeedOverride
+
+server.port: 80
