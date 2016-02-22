@@ -6,8 +6,7 @@ import lombok.Data;
 @Data
 public class DirectoryContent {
     private String id;
-    private String text;
-    private FileType type;
-    @JsonProperty("children")
+    private String label;
+    @JsonProperty("load_on_demand")
     private boolean hasChildren;
 }

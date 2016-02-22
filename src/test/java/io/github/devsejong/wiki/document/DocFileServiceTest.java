@@ -66,9 +66,9 @@ public class DocFileServiceTest {
         List<DirectoryContent> dirContents = service.getDirContents("");
 
         //then
-        assertThat(dirContents.get(0).getText(), CoreMatchers.is("dummy"));
-        assertThat(dirContents.get(1).getText(), CoreMatchers.is("markup"));
-        assertThat(dirContents.get(2).getText(), CoreMatchers.is("test.md"));
+        assertThat(dirContents.get(0).getLabel(), CoreMatchers.is("dummy"));
+        assertThat(dirContents.get(1).getLabel(), CoreMatchers.is("markup"));
+        assertThat(dirContents.get(2).getLabel(), CoreMatchers.is("test.md"));
     }
 
 }

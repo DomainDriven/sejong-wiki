@@ -8,8 +8,10 @@
     <title>위키 - ${title}</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/jqtree/1.3.0/jqtree.min.css">
 
     <link rel="stylesheet" href="/asset/css/wiki.css">
 
@@ -29,8 +31,7 @@
                 <h1>세종위키</h1>
             </div>
             <div class="row" id="docList">
-                <!--TODO 우선은 docTree로..-->
-                <div id="jstree">
+                <div id="jqtree" data-url="/wiki/tree">
                 </div>
             </div>
         </div>
@@ -41,10 +42,11 @@
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <div class="col-lg-12">
-                <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+                <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle
+                    Menu</a>
                 <h1>${title}</h1>
                 <div class="content">
-                    ${html}
+                ${html}
                 </div>
             </div>
         </div>
@@ -57,7 +59,8 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jqtree/1.3.0/tree.jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
 <!-- Menu Toggle Script -->
 <script>
@@ -66,45 +69,24 @@
         $("#wrapper").toggleClass("toggled");
     });
 
-    $('#jstree').jstree({
-        "core": {
-            "animation": 0,
-            "check_callback": true,
-            'data': {
-                'url': function (node) {
-                    return "/wiki/tree";
-                    //return node.id === '#' ?'ajax_demo_roots.json' : 'ajax_demo_children.json';
-                },
-                'data': function (node) {
-                    var path;
-                    if (node.id === "#")
-                        path = "/";
-                    else
-                        path = node.id;
+    // http://mbraak.github.io/jqTree
+    $('#jqtree').tree({
+        saveState: true,
+        selectable: false
+        /*options*/
+    }).bind(
+            'tree.click',
+            function(event) {
+                // The clicked node is 'event.node'
+                var node = event.node;
+                console.log("selected node", node);
 
-                    return {'path': path};
+                // leaf노드를 선택했을 경우에만 동작.
+                if(node.load_on_demand=== false){
+                    location.href = "/w/" + node.id;
                 }
             }
-        },
-        "types": {
-            "root": {
-                "icon": "/static/3.2.1/assets/images/tree_icon.png"
-            },
-            "FILE": {
-                "icon": "glyphicon glyphicon-file"
-            },
-            "DIRECTORY":{
-                "icon" : "glyphicon glyphicon-folder-close"
-            }
-        },
-        "plugins": [
-            //"dnd",//"search", //"state",
-            "types", "wholerow"
-        ]
-    }).on("select_node.jstree", function (e, data) {
-        if(data.node.type === "FILE")
-            location.href = "/w" + data.node.id;
-    });
+    );
 </script>
 
 </body>

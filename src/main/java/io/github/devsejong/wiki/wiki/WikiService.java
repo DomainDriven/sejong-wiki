@@ -3,8 +3,8 @@ package io.github.devsejong.wiki.wiki;
 import io.github.devsejong.wiki.document.DirectoryContent;
 import io.github.devsejong.wiki.document.DocFileService;
 import io.github.devsejong.wiki.document.Document;
-import io.github.devsejong.wiki.parser.DocumentType;
 import io.github.devsejong.wiki.parser.CoreParser;
+import io.github.devsejong.wiki.parser.DocumentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

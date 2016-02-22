@@ -77,8 +77,8 @@ public class WikiController {
     // 폴더구조를 가져온다.
     @RequestMapping(value = "/wiki/tree", method = RequestMethod.GET)
     @ResponseBody
-    public List<DirectoryContent> getCategoryTree(@RequestParam String path) {
-        return wikiService.getDirContents(path);
+    public List<DirectoryContent> getCategoryTree(@RequestParam(required = false, defaultValue = "") String node) {
+        return wikiService.getDirContents(node);
     }
 
     @RequestMapping(value = "/wiki/parsing")

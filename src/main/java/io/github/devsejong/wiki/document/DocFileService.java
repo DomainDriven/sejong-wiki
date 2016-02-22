@@ -79,17 +79,16 @@ public class DocFileService {
                     .map(p -> getDirectoryContent(dirPath, p))
                     .sorted(this::directoryContentsCompare)
                     .collect(toList());
-
         } catch (IOException e) {
             throw new DocFileServiceException("해당 디렉토리를 찾을 수 없습니다.", e);
         }
     }
 
     private int directoryContentsCompare(DirectoryContent o1, DirectoryContent o2) {
-        if (o1.getType() != o2.getType())
-            return o1.getType() == DIRECTORY ? -1 : 1;
+        if (o1.isHasChildren() != o2.isHasChildren())
+            return o1.isHasChildren() ? -1 : 1;
         else
-            return o1.getText().compareTo(o2.getText());
+            return o1.getLabel().compareTo(o2.getLabel());
     }
 
     private boolean isNotIgnoreFile(Path path) {
@@ -111,9 +110,8 @@ public class DocFileService {
 
         DirectoryContent content = new DirectoryContent();
         content.setId(Paths.get(dirPath, file.getName()).toString());
-        content.setText(file.getName());
+        content.setLabel(file.getName());
         content.setHasChildren(hasChildren);
-        content.setType(type);
 
         return content;
     }
