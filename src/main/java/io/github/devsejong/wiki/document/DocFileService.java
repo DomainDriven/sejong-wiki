@@ -1,5 +1,8 @@
 package io.github.devsejong.wiki.document;
 
+import io.github.devsejong.wiki.document.DocFileServiceException.DirectoryNotFoundException;
+import io.github.devsejong.wiki.document.DocFileServiceException.DocumentNotFoundException;
+import io.github.devsejong.wiki.document.DocFileServiceException.FailToReadFileException;
 import io.github.devsejong.wiki.document.git.GitService;
 import io.github.devsejong.wiki.document.util.DocFilePathHolder;
 import org.eclipse.jgit.util.StringUtils;
@@ -47,26 +50,25 @@ public class DocFileService {
 
         if (Files.notExists(filePath) || Files.isDirectory(filePath))
             throw new DocumentNotFoundException();
-
         try {
             List<String> lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
             String body = StringUtils.join(lines, "\n");
             return new Document(path, body);
         } catch (IOException e) {
-            throw new DocFileServiceException("Failed to read data", e);
+            throw new FailToReadFileException(e);
         }
     }
 
     public void create(String path, String body) {
-        throw new DocFileServiceException("작업 중!!");
+        throw new UnsupportedOperationException("작업 중!!");
     }
 
     public void modify(String path, String body, String history) {
-
+        throw new UnsupportedOperationException("작업 중!!");
     }
 
     public void delete(String path) {
-        throw new DocFileServiceException("작업 중!!");
+        throw new UnsupportedOperationException("작업 중!!");
     }
 
     //FIXME 이름이 마음에 들지 않아...
@@ -80,7 +82,7 @@ public class DocFileService {
                     .sorted(this::directoryContentsCompare)
                     .collect(toList());
         } catch (IOException e) {
-            throw new DocFileServiceException("해당 디렉토리를 찾을 수 없습니다.", e);
+            throw new DirectoryNotFoundException(e);
         }
     }
 

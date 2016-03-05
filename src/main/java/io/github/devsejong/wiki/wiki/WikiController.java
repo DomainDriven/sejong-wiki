@@ -1,8 +1,8 @@
 package io.github.devsejong.wiki.wiki;
 
 import io.github.devsejong.wiki.document.DirectoryContent;
+import io.github.devsejong.wiki.document.DocFileServiceException.DocumentNotFoundException;
 import io.github.devsejong.wiki.document.Document;
-import io.github.devsejong.wiki.document.DocumentNotFoundException;
 import io.github.devsejong.wiki.parser.CoreParser;
 import io.github.devsejong.wiki.parser.DocumentType;
 import org.springframework.beans.factory.annotation.Autowired;

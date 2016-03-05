@@ -2,6 +2,7 @@ package io.github.devsejong.wiki.document;
 
 
 import io.github.devsejong.wiki.SejongWikiApplication;
+import io.github.devsejong.wiki.document.DocFileServiceException.DocumentNotFoundException;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
