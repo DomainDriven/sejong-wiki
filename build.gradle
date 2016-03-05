@@ -41,8 +41,6 @@ dependencies {
 
 	//markdown
 	compile('org.pegdown:pegdown:1.6.0')
-	//asciidoc
-	compile('org.asciidoctor:asciidoctorj:1.5.2')
 }
 
 
